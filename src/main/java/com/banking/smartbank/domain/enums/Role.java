@@ -1,4 +1,7 @@
 package com.banking.smartbank.domain.enums;
 
-public class Role {
+public enum Role {
+    ADMIN,
+    USER,
+    MANAGER
 }

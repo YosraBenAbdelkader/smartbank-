@@ -1,4 +1,6 @@
 package com.banking.smartbank.domain.enums;
 
-public class AccountType {
+public enum AccountType {
+    CHECKING,
+    SAVINGS
 }

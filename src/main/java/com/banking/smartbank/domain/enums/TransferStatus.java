@@ -1,4 +1,8 @@
 package com.banking.smartbank.domain.enums;
 
-public class TransferStatus {
+public enum TransferStatus {
+    PENDING,
+    COMPLETED,
+    FAILED,
+    CANCELLED
 }

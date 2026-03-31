@@ -1,0 +1,39 @@
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE accounts (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id),
+    account_number VARCHAR(20) NOT NULL UNIQUE,
+    type VARCHAR(50) NOT NULL,
+    balance DECIMAL(19,2) NOT NULL DEFAULT 0.00,
+    currency VARCHAR(3) NOT NULL DEFAULT 'EUR',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transactions (
+    id BIGSERIAL PRIMARY KEY,
+    account_id BIGINT NOT NULL REFERENCES accounts(id),
+    amount DECIMAL(19,2) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transfers (
+    id BIGSERIAL PRIMARY KEY,
+    sender_account_id BIGINT NOT NULL REFERENCES accounts(id),
+    receiver_account_id BIGINT NOT NULL REFERENCES accounts(id),
+    amount DECIMAL(19,2) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+    reason VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
