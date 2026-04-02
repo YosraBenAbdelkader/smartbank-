@@ -2,6 +2,7 @@ package com.banking.smartbank.domain;
 
 import com.banking.smartbank.domain.enums.TransferStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
 @Table(name="transfers")
 @EntityListeners(AuditingEntityListener.class)
 public class Transfer {
