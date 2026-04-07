@@ -58,5 +58,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner | lower }}/smartbank:latest
-            ghcr.io/${{ github.repository_owner | lower }}/smartbank:${{ github.sha }}
+            ghcr.io/${{ env.REPO_OWNER }}/smartbank:latest
+            ghcr.io/${{ env.REPO_OWNER }}/smartbank:${{ github.sha }}
