@@ -22,7 +22,7 @@ class SmartbankApplicationTests {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
 
     @MockitoBean
-    AiService aiService;
+    ChatClient chatClient;
 
 	@Test
 	void contextLoads() {

@@ -18,7 +18,7 @@ spring:
     baseline-on-migrate: true
   ai:
     anthropic:
-      api-key: ${ANTHROPIC_API_KEY}
+      api-key: ${ANTHROPIC_API_KEY:dummy-key-for-tests}
 
 
 server:

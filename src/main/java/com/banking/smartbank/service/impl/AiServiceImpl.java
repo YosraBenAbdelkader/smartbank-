@@ -17,20 +17,13 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class AiServiceImpl implements AiService {
 
     private final ChatClient chatClient;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
 
-
-    public AiServiceImpl(ChatClient.Builder chatClientBuilder,
-                         AccountRepository accountRepository,
-                         TransactionRepository transactionRepository) {
-        this.chatClient = chatClientBuilder.build();
-        this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
-    }
 
     @Override
     public AiAnalysisResponse analyzeAccount(Long accountId) {

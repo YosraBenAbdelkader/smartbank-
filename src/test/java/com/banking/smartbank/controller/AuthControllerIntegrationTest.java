@@ -35,7 +35,7 @@ class AuthControllerIntegrationTest {
             .withPassword("smartbank");
 
     @MockitoBean
-    AiService aiService;
+    ChatClient chatClient;
 
     @Autowired
     private TestRestTemplate restTemplate;
