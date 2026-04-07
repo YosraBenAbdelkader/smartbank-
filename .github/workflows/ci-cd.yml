@@ -28,10 +28,7 @@ jobs:
       - name: Build and Test
         run: mvn clean verify -Dspring.profiles.active=test
         env:
-          SPRING_PROFILES_ACTIVE: test
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          TESTCONTAINERS_RYUK_DISABLED: true
-          DOCKER_HOST: unix:///var/run/docker.sock
 
       - name: Upload JaCoCo Report
         uses: actions/upload-artifact@v4.6.2
