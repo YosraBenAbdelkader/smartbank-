@@ -12,6 +12,10 @@ spring:
       api-key: ${ANTHROPIC_API_KEY:dummy-key-for-tests}
       chat:
         enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.model.anthropic.autoconfigure.AnthropicChatAutoConfiguration
+      - org.springframework.ai.model.chat.client.autoconfigure.ChatClientAutoConfiguration
 
 jwt:
   secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
