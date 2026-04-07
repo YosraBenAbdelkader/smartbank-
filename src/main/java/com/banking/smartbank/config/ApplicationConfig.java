@@ -3,6 +3,7 @@ package com.banking.smartbank.config;
 import com.banking.smartbank.exception.ResourceNotFoundException;
 import com.banking.smartbank.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,5 +40,10 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public ChatClient chatClient(ChatClient.Builder builder) {
+        return builder.build();
     }
 }

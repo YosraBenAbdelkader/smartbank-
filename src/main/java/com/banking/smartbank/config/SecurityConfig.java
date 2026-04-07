@@ -26,7 +26,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/api/v1/transfers/**/validate", "/api/v1/transfers/**/reject").hasRole("MANAGER")
+                        .requestMatchers("/api/v1/transfers/*/validate").hasRole("MANAGER")
+                        .requestMatchers("/api/v1/transfers/*/reject").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

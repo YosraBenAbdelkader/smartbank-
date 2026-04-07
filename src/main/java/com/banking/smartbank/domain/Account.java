@@ -1,8 +1,10 @@
 package com.banking.smartbank.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
     @Id
