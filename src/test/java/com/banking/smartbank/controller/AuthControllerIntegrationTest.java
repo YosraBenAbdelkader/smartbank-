@@ -3,6 +3,7 @@ package com.banking.smartbank.controller;
 import com.banking.smartbank.dto.request.LoginRequest;
 import com.banking.smartbank.dto.request.RegisterRequest;
 import com.banking.smartbank.dto.response.AuthResponse;
+import com.banking.smartbank.service.AiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.model.anthropic.autoconfigure.AnthropicChatAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -22,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @ActiveProfiles("test")
-@EnableAutoConfiguration(exclude = {AnthropicChatAutoConfiguration.class})
 class AuthControllerIntegrationTest {
 
     @Container
@@ -32,6 +33,8 @@ class AuthControllerIntegrationTest {
             .withUsername("smartbank")
             .withPassword("smartbank");
 
+    @MockitoBean
+    AiService aiService;
 
     @Autowired
     private TestRestTemplate restTemplate;
