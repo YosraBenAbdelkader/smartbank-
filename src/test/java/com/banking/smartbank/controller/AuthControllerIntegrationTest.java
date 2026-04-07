@@ -5,6 +5,7 @@ import com.banking.smartbank.dto.request.RegisterRequest;
 import com.banking.smartbank.dto.response.AuthResponse;
 import com.banking.smartbank.service.AiService;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.model.anthropic.autoconfigure.AnthropicChatAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -34,7 +35,7 @@ class AuthControllerIntegrationTest {
             .withPassword("smartbank");
 
     @MockitoBean
-    AiService aiService;
+    ChatClient.Builder chatClientBuilder;
 
     @Autowired
     private TestRestTemplate restTemplate;

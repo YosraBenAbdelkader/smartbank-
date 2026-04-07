@@ -2,6 +2,7 @@ package com.banking.smartbank;
 
 import com.banking.smartbank.service.AiService;
 import org.junit.jupiter.api.Test;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.model.anthropic.autoconfigure.AnthropicChatAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,7 @@ class SmartbankApplicationTests {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
 
     @MockitoBean
-    AiService aiService;
+    ChatClient.Builder chatClientBuilder;
 
 	@Test
 	void contextLoads() {
