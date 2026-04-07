@@ -24,11 +24,7 @@ class AuthControllerIntegrationTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16")
-            .withDatabaseName("smartbank_test")
-            .withUsername("smartbank")
-            .withPassword("smartbank");
-
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
 
     @Autowired
     private TestRestTemplate restTemplate;
