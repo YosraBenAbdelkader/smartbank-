@@ -9,7 +9,7 @@ spring:
     baseline-on-migrate: true
   ai:
     anthropic:
-      api-key: dummy-key-for-tests
+      api-key: ${ANTHROPIC_API_KEY:dummy-key-for-tests}
       chat:
         enabled: false
 
