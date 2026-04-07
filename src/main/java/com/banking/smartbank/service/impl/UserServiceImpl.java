@@ -2,6 +2,7 @@ package com.banking.smartbank.service.impl;
 
 import com.banking.smartbank.domain.User;
 import com.banking.smartbank.dto.response.UserResponse;
+import com.banking.smartbank.exception.ResourceNotFoundException;
 import com.banking.smartbank.mapper.UserMapper;
 import com.banking.smartbank.repository.UserRepository;
 import com.banking.smartbank.service.UserService;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     public UserResponse findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
         return userMapper.toResponse(user);
     }
 

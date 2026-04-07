@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse createAccount(Long userId, CreateAccountRequest request) {
 
         User user = userRepository.findById(userId).orElseThrow(() ->
-                new RuntimeException("User not found with id " + userId));
+                new ResourceNotFoundException("User not found with id " + userId));
         Account account = Account.builder()
                 .user(user)
                 .accountNumber(generateAccountNumber())
