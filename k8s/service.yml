@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: smartbank
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smartbank-service
+  namespace: smartbank
+spec:
+  selector:
+    app: smartbank
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
