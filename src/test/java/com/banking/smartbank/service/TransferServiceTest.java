@@ -73,19 +73,12 @@ class TransferServiceTest {
                 .reason("Test transfer")
                 .build();
 
-        transferResponse = new TransferResponse();
-        transferResponse.setId(1L);
-        transferResponse.setAmount(new BigDecimal("100.00"));
-        transferResponse.setStatus(TransferStatus.PENDING);
-
-        request = new CreateTransferRequest();
-        request.setReceiverAccountNumber("SB002");
-        request.setAmount(new BigDecimal("100.00"));
-        request.setReason("Test transfer");
+        transferResponse = new TransferResponse(1L, new BigDecimal("100.00"), TransferStatus.PENDING, null, null);
+        request = new CreateTransferRequest("SB002", new BigDecimal("100.00"), "Test transfer");
     }
 
     @Test
-    void createTransfer_ShouldReturnTransfer_WhenValid() throws InsufficientFundsException {
+    void createTransfer_ShouldReturnTransfer_WhenValid() {
         // GIVEN
         when(accountRepository.findById(1L)).thenReturn(Optional.of(senderAccount));
         when(accountRepository.findByAccountNumber("SB002")).thenReturn(Optional.of(receiverAccount));
@@ -97,19 +90,19 @@ class TransferServiceTest {
 
         // THEN
         assertThat(result).isNotNull();
-        assertThat(result.getAmount()).isEqualTo(new BigDecimal("100.00"));
+        assertThat(result.amount()).isEqualTo(new BigDecimal("100.00"));
         verify(transferRepository, times(1)).save(any(Transfer.class));
     }
 
     @Test
     void createTransfer_ShouldThrowException_WhenInsufficientFunds() {
         // GIVEN
-        request.setAmount(new BigDecimal("9999.00")); // plus que le solde
+        CreateTransferRequest bigRequest = new CreateTransferRequest("SB002", new BigDecimal("9999.00"), "Test transfer");
         when(accountRepository.findById(1L)).thenReturn(Optional.of(senderAccount));
         when(accountRepository.findByAccountNumber("SB002")).thenReturn(Optional.of(receiverAccount));
 
         // WHEN + THEN
-        assertThatThrownBy(() -> transferService.createTransfer(1L, request))
+        assertThatThrownBy(() -> transferService.createTransfer(1L, bigRequest))
                 .isInstanceOf(InsufficientFundsException.class);
     }
 
@@ -134,7 +127,7 @@ class TransferServiceTest {
 
         // THEN
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.id()).isEqualTo(1L);
     }
 
     @Test

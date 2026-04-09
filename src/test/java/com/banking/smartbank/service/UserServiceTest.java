@@ -17,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -47,11 +46,7 @@ class UserServiceTest {
                 .role(Role.CLIENT)
                 .build();
 
-        userResponse = new UserResponse();
-        userResponse.setId(1L);
-        userResponse.setEmail("yosra@smartbank.com");
-        userResponse.setFirstName("Yosra");
-        userResponse.setLastName("Benabdelkader");
+        userResponse = new UserResponse(1L, "yosra@smartbank.com", "Yosra", "Benabdelkader", "CLIENT");
     }
 
     @Test
@@ -65,7 +60,7 @@ class UserServiceTest {
 
         // THEN
         assertThat(result).isNotNull();
-        assertThat(result.getEmail()).isEqualTo("yosra@smartbank.com");
+        assertThat(result.email()).isEqualTo("yosra@smartbank.com");
         verify(userRepository, times(1)).findById(1L);
     }
 
@@ -91,6 +86,6 @@ class UserServiceTest {
 
         // THEN
         assertThat(results).asList().hasSize(1);
-        assertThat(results.get(0).getEmail()).isEqualTo("yosra@smartbank.com");
+        assertThat(results.get(0).email()).isEqualTo("yosra@smartbank.com");
     }
 }

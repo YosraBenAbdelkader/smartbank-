@@ -28,6 +28,11 @@ public class GlobalExceptionHandler {
                     "error", "Invalid Transfer State",
                     "message", e.getMessage()
             ));
+            default -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "status", 400,
+                    "error", "Bad Request",
+                    "message", ex.getMessage()
+            ));
         };
     }
 

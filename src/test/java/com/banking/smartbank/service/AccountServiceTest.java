@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -63,15 +64,8 @@ class AccountServiceTest {
                 .currency("EUR")
                 .build();
 
-        accountResponse = new AccountResponse();
-        accountResponse.setId(1L);
-        accountResponse.setAccountNumber("SB123456");
-        accountResponse.setBalance(BigDecimal.ZERO);
-        accountResponse.setCurrency("EUR");
-
-        request = new CreateAccountRequest();
-        request.setType(AccountType.CHECKING);
-        request.setCurrency("EUR");
+        accountResponse = new AccountResponse(1L, "SB123456", "CHECKING", BigDecimal.ZERO, "EUR");
+        request = new CreateAccountRequest("EUR", AccountType.CHECKING);
     }
 
     @Test
@@ -86,7 +80,7 @@ class AccountServiceTest {
 
         // THEN
         assertThat(result).isNotNull();
-        assertThat(result.getAccountNumber()).isEqualTo("SB123456");
+        assertThat(result.accountNumber()).isEqualTo("SB123456");
         verify(accountRepository, times(1)).save(any(Account.class));
     }
 
@@ -112,7 +106,7 @@ class AccountServiceTest {
 
         // THEN
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.id()).isEqualTo(1L);
     }
 
     @Test
