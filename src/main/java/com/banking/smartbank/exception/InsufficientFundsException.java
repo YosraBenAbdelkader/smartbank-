@@ -1,8 +1,7 @@
 package com.banking.smartbank.exception;
 
-public class InsufficientFundsException extends Exception{
-   public InsufficientFundsException(String message) {
-       super(message);
-   }
-
+public final class InsufficientFundsException extends BankingException {
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
 }

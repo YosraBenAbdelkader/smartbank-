@@ -1,7 +1,6 @@
 package com.banking.smartbank.exception;
 
-public class InvalidTransferStateException  extends RuntimeException {
-
+public final class InvalidTransferStateException extends BankingException {
     public InvalidTransferStateException(String message) {
         super(message);
     }

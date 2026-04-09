@@ -2,7 +2,6 @@ package com.banking.smartbank.controller;
 
 import com.banking.smartbank.dto.request.CreateTransferRequest;
 import com.banking.smartbank.dto.response.TransferResponse;
-import com.banking.smartbank.exception.InsufficientFundsException;
 import com.banking.smartbank.service.TransferService;
 import com.banking.smartbank.service.TransferWorkflowService;
 import jakarta.validation.Valid;
@@ -22,7 +21,7 @@ public class TransferController {
     @PostMapping("/account/{accountId}")
     public ResponseEntity<TransferResponse> createTransfer(
             @PathVariable Long accountId,
-            @RequestBody @Valid CreateTransferRequest request) throws InsufficientFundsException {
+            @RequestBody @Valid CreateTransferRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(transferService.createTransfer(accountId, request));
     }

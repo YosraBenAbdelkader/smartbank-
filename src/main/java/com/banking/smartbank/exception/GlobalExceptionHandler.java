@@ -10,31 +10,25 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-                "status", 404,
-                "error", "Not Found",
-                "message", ex.getMessage()
-        ));
-    }
-
-    @ExceptionHandler(InsufficientFundsException.class)
-    public ResponseEntity<Map<String, Object>> handleInsufficientFunds(InsufficientFundsException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                "status", 400,
-                "error", "Bad Request",
-                "message", ex.getMessage()
-        ));
-    }
-
-    @ExceptionHandler(InvalidTransferStateException.class)
-    public ResponseEntity<Map<String, Object>> handleInvalidState(InvalidTransferStateException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                "status", 400,
-                "error", "Bad Request",
-                "message", ex.getMessage()
-        ));
+    @ExceptionHandler(BankingException.class)
+    public ResponseEntity<Map<String, Object>> handleBankingException(BankingException ex) {
+        return switch (ex) {
+            case ResourceNotFoundException e -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                    "status", 404,
+                    "error", "Not Found",
+                    "message", e.getMessage()
+            ));
+            case InsufficientFundsException e -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "status", 400,
+                    "error", "Insufficient Funds",
+                    "message", e.getMessage()
+            ));
+            case InvalidTransferStateException e -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "status", 400,
+                    "error", "Invalid Transfer State",
+                    "message", e.getMessage()
+            ));
+        };
     }
 
     @ExceptionHandler(RuntimeException.class)

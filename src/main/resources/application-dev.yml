@@ -1,4 +1,7 @@
 spring:
+  threads:
+    virtual:
+      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/smartbank_dev
     username: smartbank

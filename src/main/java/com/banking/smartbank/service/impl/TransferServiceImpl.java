@@ -15,53 +15,52 @@ import com.banking.smartbank.service.TransferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
+
     private final AccountRepository accountRepository;
     private final AccountService accountService;
     private final TransferRepository transferRepository;
     private final TransferMapper transferMapper;
 
     @Override
-    public TransferResponse createTransfer(Long senderAccountId, CreateTransferRequest request) throws InsufficientFundsException {
+    public TransferResponse createTransfer(Long senderAccountId, CreateTransferRequest request) {
         Account senderAccount = accountRepository.findById(senderAccountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + senderAccountId));
 
-        Account receiverAccount = accountRepository.findByAccountNumber(request.getReceiverAccountNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found with number: " + request.getReceiverAccountNumber()));
+        Account receiverAccount = accountRepository.findByAccountNumber(request.receiverAccountNumber())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with number: " + request.receiverAccountNumber()));
 
-        if (senderAccount.getBalance().compareTo(request.getAmount()) < 0) {
+        if (senderAccount.getBalance().compareTo(request.amount()) < 0) {
             throw new InsufficientFundsException("Insufficient funds");
         }
 
         Transfer transfer = Transfer.builder()
                 .senderAccount(senderAccount)
                 .receiverAccount(receiverAccount)
-                .amount(request.getAmount())
+                .amount(request.amount())
                 .status(TransferStatus.PENDING)
-                .reason(request.getReason())
+                .reason(request.reason())
                 .build();
 
-        Transfer savedTransfer = transferRepository.save(transfer);
-
-        return transferMapper.toResponse(savedTransfer);
+        return transferMapper.toResponse(transferRepository.save(transfer));
     }
 
     @Override
     public TransferResponse findById(Long id) {
-        TransferResponse.TransferResponseBuilder builder = TransferResponse.builder()
-                .id(id);
-        Transfer transfer=transferRepository.findById(id).orElseThrow(() ->
+        Transfer transfer = transferRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Transfer not found with id: " + id));
         return transferMapper.toResponse(transfer);
     }
 
     @Override
     public List<TransferResponse> findBySenderAccountId(Long accountId) {
-        List<Transfer> list = transferRepository.findBySenderAccountId(accountId);
-      return list.stream().map(transfer -> transferMapper.toResponse(transfer)).toList();
+        return transferRepository.findBySenderAccountId(accountId)
+                .stream()
+                .map(transferMapper::toResponse)
+                .toList();
     }
 }

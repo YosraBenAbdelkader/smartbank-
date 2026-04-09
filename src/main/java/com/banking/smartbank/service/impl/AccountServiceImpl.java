@@ -24,23 +24,21 @@ public class AccountServiceImpl implements AccountService {
     private final UserRepository userRepository;
     private final AccountMapper accountMapper;
 
-
     @Override
     @Transactional
     public AccountResponse createAccount(Long userId, CreateAccountRequest request) {
-
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new ResourceNotFoundException("User not found with id " + userId));
+
         Account account = Account.builder()
                 .user(user)
                 .accountNumber(generateAccountNumber())
-                .type(request.getType().name())
+                .type(request.type().name())
                 .balance(BigDecimal.ZERO)
-                .currency(request.getCurrency())
+                .currency(request.currency())
                 .build();
 
-
-        Account savedAccount= accountRepository.save(account);
+        Account savedAccount = accountRepository.save(account);
         return accountMapper.toResponse(savedAccount);
     }
 
